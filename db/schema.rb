@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610153430) do
+ActiveRecord::Schema.define(version: 20170610162324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "cities", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "state_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "countries", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name"
@@ -26,6 +33,13 @@ ActiveRecord::Schema.define(version: 20170610153430) do
     t.index ["iso2_code"], name: "index_countries_on_iso2_code", unique: true
     t.index ["iso3_code"], name: "index_countries_on_iso3_code", unique: true
     t.index ["name"], name: "index_countries_on_name", unique: true
+  end
+
+  create_table "states", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.uuid "country_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
