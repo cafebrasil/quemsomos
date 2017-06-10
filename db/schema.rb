@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610162324) do
+ActiveRecord::Schema.define(version: 20170610182440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,24 @@ ActiveRecord::Schema.define(version: 20170610162324) do
     t.index ["iso2_code"], name: "index_countries_on_iso2_code", unique: true
     t.index ["iso3_code"], name: "index_countries_on_iso3_code", unique: true
     t.index ["name"], name: "index_countries_on_name", unique: true
+  end
+
+  create_table "profiles", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.date "date_of_birth", null: false
+    t.string "gender", null: false
+    t.string "marital_status"
+    t.integer "children", default: 0, null: false
+    t.uuid "city_id"
+    t.string "profession"
+    t.string "occupation"
+    t.string "occupation_area"
+    t.string "hobbies"
+    t.text "goals"
+    t.text "about"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "states", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
